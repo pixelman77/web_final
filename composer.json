@@ -1,0 +1,11 @@
+{
+    "name": "haghgoo/simple_twitter",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Pixelman77",
+            "email": "42618382+pixelman77@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
