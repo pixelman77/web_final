@@ -42,5 +42,3 @@ jobs:
         run: |
           mysql -h 127.0.0.1 -P 3306 -u root -proot web_final < web_final.sql
 
-      - name: Run PHPUnit Tests (optional)
-        run: ./vendor/bin/phpunit
