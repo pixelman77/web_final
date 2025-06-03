@@ -1,18 +1,24 @@
-<?php
-ob_start();
-?>
-<h2>Register</h2>
-<?php if (!empty($errors)): ?>
-    <div class="error"><?php echo implode('<br>', $errors); ?></div>
+<?php include 'views/partials/nav.php'; ?>
+<div class="container">
+
+<h1>Register</h1>
+
+<?php if (!empty($error)): ?>
+    <p style="color:red;"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
+
 <form method="post">
-    <label>Name:<br><input type="text" name="name" required></label><br><br>
-    <label>Email:<br><input type="email" name="email" required></label><br><br>
-    <label>Password:<br><input type="password" name="password" required></label><br><br>
-    <label>Confirm Password:<br><input type="password" name="password2" required></label><br><br>
+    <label>Name:</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>Email:</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Password:</label><br>
+    <input type="password" name="password" required><br><br>
+
     <button type="submit">Register</button>
 </form>
-<?php
-$content = ob_get_clean();
-require 'layout.php';
-?>
+</div>
+</body>
+</html>

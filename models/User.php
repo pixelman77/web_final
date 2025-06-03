@@ -1,23 +1,42 @@
 <?php
+
+namespace App\Models;
+
+use App\Core\Database;
+use PDO;
+
 class User {
-    private $pdo;
-    public function __construct($pdo) {
-        $this->pdo = $pdo;
+    public static function getAllSorted(): array {
+        $db = Database::connect();
+        $stmt = $db->query("SELECT id, name, email FROM users ORDER BY name ASC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function create($name, $email, $password) {
-        $hash = hash('sha256', $password);
-        $stmt = $this->pdo->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-        return $stmt->execute([$name, $email, $hash]);
+
+    public static function create(string $name, string $email, string $password): bool {
+        $db = Database::connect();
+
+        // Hash using SHA256
+        $hashedPassword = hash('sha256', $password);
+
+        $stmt = $db->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+        return $stmt->execute([$name, $email, $hashedPassword]);
     }
-    public function findByEmail($email) {
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
+
+    public static function findByEmail(string $email): ?array {
+        $db = Database::connect();
+
+        $stmt = $db->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $user ?: null;
     }
-    public function findById($id) {
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = ?");
+
+
+    public static function getById(int $id): ?array {
+        $db = Database::connect();
+        $stmt = $db->prepare("SELECT id, name FROM users WHERE id = ?");
         $stmt->execute([$id]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 }
-?>

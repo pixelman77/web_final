@@ -1,21 +1,17 @@
-<?php
-ob_start();
-?>
-<h2>Top 10 Popular Posts</h2>
-<?php if (empty($top_posts)): ?>
-    <p>No data available.</p>
-<?php else: ?>
-    <ol>
-    <?php foreach ($top_posts as $post): ?>
-        <li class="post">
-            <strong><?php echo htmlspecialchars($post['name']); ?></strong>:
-            <p><?php echo nl2br(htmlspecialchars($post['content'])); ?></p>
-            <small><em>Views: <?php echo (int)$post['views']; ?></em></small>
-        </li>
-    <?php endforeach; ?>
-    </ol>
-<?php endif; ?>
-<?php
-$content = ob_get_clean();
-require 'layout.php';
-?>
+
+<?php include 'views/partials/nav.php'; ?>
+<div class="container">
+
+
+<h1>Popular Posts</h1>
+
+<?php foreach ($posts as $post): ?>
+    <div style="border:1px solid #ccc; padding:10px; margin:10px 0;">
+        <strong><?= htmlspecialchars($post['user_name']) ?></strong><br>
+        <?= htmlspecialchars($post['content']) ?><br>
+        <small>Views: <?= (int)$post['view_count'] ?> | PageRank: <?= round($ranks[$post['id']], 5) ?></small>
+    </div>
+<?php endforeach; ?>
+</div>
+</body>
+</html>
